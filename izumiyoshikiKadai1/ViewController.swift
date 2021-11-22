@@ -9,11 +9,27 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var calcResultLabel: UILabel!
+    @IBOutlet weak var textFieldsStackView: UIStackView!
+    private let calc: Calc = Calc()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
 
+    @IBAction func buttonTapped(_ sender: Any) {
+        calc.initializeResult()
+        for subView in textFieldsStackView.subviews {
+            let textField = subView as! UITextField
+            guard let text = textField.text else {
+                continue
+            }
+            guard let number = Int(text) else {
+                continue
+            }
+            calc.add(number: number)
+        }
+        calcResultLabel.text = calc.getResult().description
+    }
 }
 
